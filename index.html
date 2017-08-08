@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login client</title>
+</head>
+<body>
+<a href="https://gorillagorilla.eu.auth0.com/authorize?scope=read:timesheets%20openid&audience=https://api.abcinc.com/timesheets&response_type=id_token%20token&client_id=lSH7ys5vnqtkuheVXwRsl1zz2Mp2ULS1&redirect_uri=https://auth0-clientfm.eu-gb.mybluemix.net/&nonce=hellohello&state=thisisastate">
+    Sign In
+</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.addEventListener('load', function() {
+        const match = RegExp('[#&]' + "access_token" + '=([^&]*)').exec(window.location.hash);
+        console.log("window.location", window.location);
+        console.log("match", match);
+        const token = decodeURIComponent(match[1].replace(/\+/g, ' '));
+
+        console.log('token', token);
+
+
+    });
+
+    $.getElementById("bReq").onClick(function(){
+        console.log("clicked");
+        $.ajax({
+            cache: false,
+            url: "http://localhost:8080/authorized",
+            headers: { "Authorization": "Bearer " + access_token }
+        });
+
+    });
+
+</script>
+
+<button id="bReq">Make request</button>
+</body>
+</html>
